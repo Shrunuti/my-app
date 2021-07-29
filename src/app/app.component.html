@@ -1,0 +1,75 @@
+<div class="pageWrapper">
+<div class="wrapper">
+  <div class="pageHeading">
+      <h1>SpaceX Launch Programs</h1>
+  </div>
+  <!--filter section-->
+  <div class="filterParent">
+      <h2>Filters</h2>
+      <!--launch year-->
+      <div>
+          <div>
+              <p class="filterHeading">Launch Year</p>
+          </div>
+          <ul>
+              <li *ngFor="let year of year_buttons" (click)="filterByYear(year)">{{year}}</li>
+              
+          </ul>
+
+      </div>
+      <!--Success launch-->
+      <div>
+          <div>
+              <p class="filterHeading">Successful Launch</p>
+          </div>
+          <ul>
+              <li (click)="filterByLaunch(true)">True</li>
+              <li  (click)="filterByLaunch(false)">False</li>
+          </ul>
+      </div>
+      <!--success landing-->
+      <div>
+          <div>
+              <p class="filterHeading">Successful Landing</p>
+          </div>
+          <ul>
+              <li (click)="filterByLand(true)">True</li>
+              <li (click)="filterByLand(false)">False</li>
+          </ul>
+      </div>
+  </div>
+  <!--filter results-->
+  <div class="searchResultsParent">
+    <ng-container *ngIf="!isDataEmpty">
+
+      <div  class="launchBoxParent" *ngFor="let result of defaultResponse">
+          <div class="searchResultImgDiv">
+              <img class="searchResultImg" src="{{result.links.mission_patch}}" alt="result.mission_name" title={{result.mission_name}} />
+          </div>
+          <div>
+              <h2>{{result.mission_name}}#{{result.flight_number}}</h2>
+              <div class="missiondetails">
+                  <label>Mission Ids:</label>
+                  <ul class="missionIDHeight">
+                      <li *ngFor="let id of result.mission_id">{{id}}</li>
+                  </ul>
+                  <div><label>Launch Year:</label><span>{{result.launch_year}}</span></div>
+                  <div><label>Successful Launch:</label><span>{{result.launch_success}}</span></div>
+                  <div><label>Successful Landing:</label><span>{{result.rocket.first_stage.cores[0].land_success}}</span></div>
+              </div>
+          </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isDataEmpty">
+
+      <div >
+        <p class="dataCenterAlign">No data to display</p>
+      </div>
+    </ng-container>
+  </div>
+  <!--clear div-->
+  <div class="clearfix"></div>
+</div>
+<div class="footer"><span>Developed By:</span>Aishwarya Kulkarni</div>
+
+</div>
