@@ -1,75 +1,67 @@
 <div class="pageWrapper">
 <div class="wrapper">
-  <div class="pageHeading">
-      <h1>SpaceX Launch Programs</h1>
+  <header class="pageHeading">
+      <h1>Github Search Repo</h1>
+  </header>
+  <div class="inputDiv">
+      <input class="inputBox" type="text" placeholder="Enter Username" [(ngModel)]="username"/>
+      <button type="submit" name="Submit" class="submitBtn" (click)="Submit()">Submit</button>
   </div>
-  <!--filter section-->
-  <div class="filterParent">
-      <h2>Filters</h2>
-      <!--launch year-->
-      <div>
-          <div>
-              <p class="filterHeading">Launch Year</p>
-          </div>
-          <ul>
-              <li *ngFor="let year of year_buttons" (click)="filterByYear(year)">{{year}}</li>
-              
-          </ul>
-
-      </div>
-      <!--Success launch-->
-      <div>
-          <div>
-              <p class="filterHeading">Successful Launch</p>
-          </div>
-          <ul>
-              <li (click)="filterByLaunch(true)">True</li>
-              <li  (click)="filterByLaunch(false)">False</li>
-          </ul>
-      </div>
-      <!--success landing-->
-      <div>
-          <div>
-              <p class="filterHeading">Successful Landing</p>
-          </div>
-          <ul>
-              <li (click)="filterByLand(true)">True</li>
-              <li (click)="filterByLand(false)">False</li>
-          </ul>
-      </div>
-  </div>
-  <!--filter results-->
-  <div class="searchResultsParent">
-    <ng-container *ngIf="!isDataEmpty">
-
-      <div  class="launchBoxParent" *ngFor="let result of defaultResponse">
-          <div class="searchResultImgDiv">
-              <img class="searchResultImg" src="{{result.links.mission_patch}}" alt="result.mission_name" title={{result.mission_name}} />
-          </div>
-          <div>
-              <h2>{{result.mission_name}}#{{result.flight_number}}</h2>
-              <div class="missiondetails">
-                  <label>Mission Ids:</label>
-                  <ul class="missionIDHeight">
-                      <li *ngFor="let id of result.mission_id">{{id}}</li>
-                  </ul>
-                  <div><label>Launch Year:</label><span>{{result.launch_year}}</span></div>
-                  <div><label>Successful Launch:</label><span>{{result.launch_success}}</span></div>
-                  <div><label>Successful Landing:</label><span>{{result.rocket.first_stage.cores[0].land_success}}</span></div>
+ 
+    <div *ngIf="defaultResponse.length>0" class="filterdiv">
+     <p>Filters</p>
+      <input  class="srchinputBox" type="text" placeholder="Enter repo name"  [(ngModel)]="srch_repo">
+      
+      <input  class="srchinputBox" type="text" placeholder="Enter owner"  [(ngModel)]="srch_owner">
+      
+      <input  class="srchinputBox" type="number" placeholder="Enter stargazers count"  [(ngModel)]="srch_star">
+      <input  class="srchinputBox" type="number" placeholder="Enter open issues count"  [(ngModel)]="srch_issuecount">
+      <input class="srchinputBox" type="number" placeholder="Enter watchers count"  [(ngModel)]="srch_watch">
+      <button type="submit" class="submitBtn" (click)="SearchBy()">Search</button>
+      <button type="submit" class="submitBtn" (click)="ClearSearch()">Clear Search</button>
+    </div>
+ 
+  <div *ngIf="defaultResponse.length>0">
+    <table >
+        <tr >
+          <th>Owner</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Stars</th>
+          <th>Open issue count</th>
+          <th>Watchers</th>
+        </tr>
+        <tr  *ngFor="let user of defaultResponse">
+          <td >
+              <div>
+                  {{user.owner.login}}
+                    <span><img src={{user.owner.avatar_url}} height='20px' width='20px' alt="{{user.owner.login}}"/></span>
               </div>
-          </div>
-      </div>
-    </ng-container>
-    <ng-container *ngIf="isDataEmpty">
-
-      <div >
-        <p class="dataCenterAlign">No data to display</p>
-      </div>
-    </ng-container>
+              
+          </td>
+          <td>
+              {{user.name}}
+          </td>
+          <td>
+            {{user.description}}
+          </td>
+          <td>
+              {{user.stargazers_count}}
+          </td>
+          <td>
+            {{user.open_issues_count}}
+        </td>
+        <td>
+            {{user.watchers_count}}
+        </td>
+        </tr>
+        
+      </table>
   </div>
-  <!--clear div-->
-  <div class="clearfix"></div>
+  <div *ngIf="defaultResponse.length==0">
+    <p class="nodata">No data to display</p>
+  </div>
 </div>
-<div class="footer"><span>Developed By:</span>Aishwarya Kulkarni</div>
+<footer class="footer"><span>Developed By:</span>Aishwarya Kulkarni</footer>
 
 </div>
